@@ -40,7 +40,7 @@ class NamedEntitiesService:
         self.ner = EntityRecognizer(self.nlp)
         """
         # Wiki EL
-        self.wiki_kb = WikidataKnowledgeBase(self.nlp, resources_manager)
+        #        self.wiki_kb = WikidataKnowledgeBase(self.nlp, resources_manager)
         self.wiki_nel = WikidataEntityLinker(self.nlp, resources_manager)
 
         self.abbreviation = DreiPcAbbreviationDetector(self.nlp)

@@ -5,7 +5,7 @@ from bson.errors import InvalidId
 from pydantic import validator, Field
 
 from models.mongo_model import MongoModel
-from proto.dreipc.asset.namedentities import NamedEntityProto
+#  from proto.dreipc.asset.namedentities import NamedEntityProto
 
 
 class ObjectIdStr(str):

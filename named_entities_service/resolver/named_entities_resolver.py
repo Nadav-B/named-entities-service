@@ -17,10 +17,9 @@ class NamedEntitiesResolver(GraphQLResolver):
     service = None
     repository = None
 
-    def __init__(self, _service: NamedEntitiesService, _repository: NamedEntitiesResultRepository):
+    def __init__(self, _service: NamedEntitiesService):
         super(NamedEntitiesResolver, self).__init__()
         NamedEntitiesResolver.service = _service
-        NamedEntitiesResolver.repository = _repository
 
     @detect_entities_query.field('detectEntities')
     def detect_entities(self, info, **kwargs):

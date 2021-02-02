@@ -4,18 +4,22 @@
 import logging
 import threading
 
+import yaml
+
 from ariadne.asgi import GraphQL
-from py_config.application_config import YamlConfig
+# from py_config.application_config import YamlConfig
 
 from database.repos.named_entitites_result_repository import NamedEntitiesResultRepository
 from infrastructure.fastapi import FastAPIServer
 from infrastructure.graphql import GraphQLConfiguration
 from infrastructure.mongo_db import MongoDB
 from infrastructure.rabbitmq import RabbitMQ
-from messaging.detection_listener import NamedEntitiesRabbitListener
+# from messaging.detection_listener import NamedEntitiesRabbitListener
+from resolver.named_entities_resolver import NamedEntitiesResolver
+from resources.yaml_config import YamlConfig
 from nlp.named_entities_service import NamedEntitiesService
 from resolver.knowledge_base_resolver import KnowledgeBaseResolver
-from resolver.named_entities_resolver import NamedEntitiesResolver
+#  from resolver.named_entities_resolver import NamedEntitiesResolver
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
 
@@ -38,27 +42,26 @@ class NamedEntitiesService:
     webserver = FastAPIServer(app_config['server'])
 
     # MongoDB
-    mongodb = MongoDB(app_config['mongodb'])
-    ne_repository = NamedEntitiesResultRepository(mongodb, 'named_entities_results')
-    kb_repository = NamedEntitiesResultRepository(mongodb, 'knowledge_bases')
+    # mongodb = MongoDB(app_config['mongodb'])
+    #ne_repository = NamedEntitiesResultRepository(mongodb, 'named_entities_results')
+    # kb_repository = NamedEntitiesResultRepository(mongodb, 'knowledge_bases')
 
-    webserver.startup_event(mongodb.connect)
+    # webserver.startup_event(mongodb.connect)
 
     # GraphQL
-    entities_resolver = NamedEntitiesResolver(text_analyser, ne_repository)
-    kb_resolver = KnowledgeBaseResolver(text_analyser, kb_repository)
+    entities_resolver = NamedEntitiesResolver(text_analyser)
+    # kb_resolver = KnowledgeBaseResolver(text_analyser, kb_repository)
 
     schema = GraphQLConfiguration(entities_resolver).schema()
-    webserver.register_endpoint("/graphql",
-                                GraphQL(schema, error_formatter=GraphQLConfiguration.dreipc_error_formatter))
+    webserver.register_endpoint("/graphql", GraphQL(schema, error_formatter=GraphQLConfiguration.dreipc_error_formatter))
 
     # RabbitMQ
-    rabbitmq = RabbitMQ(app_config['rabbitmq'])
-    rabbit_listener = NamedEntitiesRabbitListener(rabbitmq.amqp_url, text_analyser, ne_repository)
-    thread = threading.Thread(target=rabbit_listener.run, daemon=True)
-    thread.start()
+    # rabbitmq = RabbitMQ(app_config['rabbitmq'])
+    # rabbit_listener = NamedEntitiesRabbitListener(rabbitmq.amqp_url, text_analyser, ne_repository)
+    # thread = threading.Thread(target=rabbit_listener.run, daemon=True)
+    # thread.start()
 
-    webserver.shutdown_event(rabbit_listener.stop)
-    webserver.shutdown_event(thread.join)
-    webserver.shutdown_event(mongodb.disconnect)
+    # webserver.shutdown_event(rabbit_listener.stop)
+    #  webserver.shutdown_event(thread.join)
+    # webserver.shutdown_event(mongodb.disconnect)
     webserver.start()

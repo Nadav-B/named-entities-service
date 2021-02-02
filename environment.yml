@@ -28,8 +28,8 @@ dependencies:
       - unicode
       - version_query==1.1.0 #  for service versioning
       - pandas
-      - py-config==0.0.4 # exists on Nexus, to install with pip locally
+     # - py-config==0.0.4 # exists on Nexus, to install with pip locally
       - ariadne==0.12.0
       - ariadne-extensions==0.1.6
-      - rabbitmq-proto-lib>=0.0.32
+     # - rabbitmq-proto-lib>=0.0.32
       - graphql-core==3.0.5

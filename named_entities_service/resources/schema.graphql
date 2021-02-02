@@ -45,7 +45,7 @@ input NamedEntityInput {
     literal: String
     type: String
     start_pos: Int
-    page_id: I
+    page_id: ID
     end_pos: Int
     knowledge_base_id: String # Contains Letter at the beginning
     link: String
