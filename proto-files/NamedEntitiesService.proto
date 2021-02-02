@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package dreipc.asset.namedentities;
+
+option java_package = "dreipc.q8r.proto.asset.text";
+option java_outer_classname = "NamedEntitiesProto";
+
+
+message NamedEntitiesProto {
+  string providedBy = 1;
+  repeated NamedEntityProto entities = 2;
+  EnrichmentStatusProto status = 3;
+}
+
+message NamedEntityProto {
+  string id = 1;
+  string literal = 2;
+  string type = 3;
+  string page_id = 4;
+  int32 start_pos = 5;
+  int32 end_pos = 6;
+  string knowledge_base_id = 7;
+  string link = 8;
+
+}
+
+enum EnrichmentStatusProto {
+  NOT_STARTED = 0;
+  PENDING = 1;
+  DONE = 2;
+  VERIFIED = 3;
+  ERROR = 4;
+}
+
+

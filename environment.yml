@@ -1,0 +1,35 @@
+name: named-entities-service
+channels:
+  - conda-forge
+  - anaconda
+dependencies:
+  - python=3.7.9
+  - uvicorn
+  - fastapi
+  - spacy=2.3.4
+  - pymongo
+  - waitress
+  - dateparser
+  - psutil
+  - pip
+  # with GPU
+  # - cudatoolkit=10.1
+  # - cupy
+  # - spacy[cuda101]
+  - pip:
+      - scispacy
+      - spacy-iwnlp
+      - wget
+      - tqdm>=4.38.0,<5.0.0
+      - aiofiles
+      - numpy>=1.15.0
+      - plac>=0.9.6,<1.2.0
+      - thinc
+      - unicode
+      - version_query==1.1.0 #  for service versioning
+      - pandas
+      - py-config==0.0.4 # exists on Nexus, to install with pip locally
+      - ariadne==0.12.0
+      - ariadne-extensions==0.1.6
+      - rabbitmq-proto-lib>=0.0.32
+      - graphql-core==3.0.5

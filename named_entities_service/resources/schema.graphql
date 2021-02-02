@@ -1,0 +1,72 @@
+type Mutation {
+    verifyNamedEntities(entities: [NamedEntityInput]): [NamedEntity]
+    addKnowledgeBases(kbs: [KnowledgeBaseInput]): [KnowledgeBase]
+}
+
+type Query {
+    detectEntities(text: String): [NamedEntity]
+    getPageEntities(page_id: String): [NamedEntity]
+    getKnowledgeBases: [KnowledgeBase]
+}
+
+# Ownd by the asset-service
+type Page # @extends @key(fields: "id")
+{
+    #id: ID! @external
+    named_entities: [NamedEntity]
+    entitesDetectionStatus: AnalyseStatus!
+}
+
+type NamedEntity {
+    id: ID
+    literal: String
+    type: String
+    start_pos: Int
+    page_id: String
+    end_pos: Int
+    knowledge_base_id: String # Contains Letter at the beginning
+    link: String
+}
+
+
+type KnowledgeBase {
+    id: ID
+    literal: String
+    type: String
+    knowledge_base_id: String # Contains Letter at the beginning
+    link: String
+    source: String
+}
+
+# Input Types
+
+input NamedEntityInput {
+    id: Int
+    literal: String
+    type: String
+    start_pos: Int
+    page_id: I
+    end_pos: Int
+    knowledge_base_id: String # Contains Letter at the beginning
+    link: String
+}
+
+
+input KnowledgeBaseInput {
+    id: Int
+    literal: String
+    type: String
+    knowledge_base_id: String # Contains Letter at the beginning
+    link: String
+    source: String
+}
+
+
+enum AnalyseStatus {
+    NOT_STARTED,
+    PENDING,
+    DONE,
+    VERIFIED,
+    ERROR
+}
+
